@@ -10,54 +10,45 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 
 @Service
-public class OneFilePerBasketStorageService implements StorageService {
+public class MultiFilesBasketStorageService implements StorageService<Basket> {
 
-    private final Logger logger = LoggerFactory.getLogger(OneFilePerBasketStorageService.class);
+    private final Logger logger = LoggerFactory.getLogger(MultiFilesBasketStorageService.class);
     private final ObjectMapper mapper = new ObjectMapper();
 
     @Override
-    public Basket readBasket(String basketId) {
-        File file = new File(basketId);
+    public Basket read(String basketId) {
         try {
             logger.debug(String.format("Reading basket %s", basketId));
+            File file = new File(basketId);
             if (file.exists())
                 return mapper.readValue(file, new TypeReference<Basket>() {
                 });
         } catch (Exception e) {
-            logger.error("Error reading the basket " + basketId, e);
+            throw new RuntimeException(e);
         }
 
         return null;
     }
 
     @Override
-    public boolean writeBasket(Basket basket) {
-        String basketId = "";
+    public void write(Basket basket) {
         try {
-            basketId = basket.getId();
+            String basketId = basket.getId();
             logger.debug(String.format("Storing basket %s", basketId));
             mapper.writeValue(new File(basketId), basket);
-
-            return true;
         } catch (Exception e) {
-            logger.error("Error writing the basket " + basketId, e);
+            throw new RuntimeException(e);
         }
-
-        return false;
     }
 
     @Override
-    public boolean removeBasket(String basketId) {
+    public void remove(String basketId) {
         try {
             logger.debug(String.format("Removing basket %s", basketId));
             File file = new File(basketId);
             file.delete();
-
-            return true;
         } catch (Exception e) {
-            logger.error("Error removing the basket " + basketId, e);
+            throw new RuntimeException(e);
         }
-
-        return false;
     }
 }

@@ -1,12 +1,11 @@
-package cabify.basketcheckout.server.service;
+package cabify.basketcheckout.server.repository;
 
-import cabify.basketcheckout.server.model.Basket;
+public interface StorageService<T> {
 
-public interface StorageService {
+    public T read(String id);
 
-    public Basket readBasket(String basketId);
+    public void write(T t);
 
-    public boolean writeBasket(Basket basket);
+    public void remove(String id);
 
-    public boolean removeBasket(String basketId);
 }

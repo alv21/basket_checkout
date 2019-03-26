@@ -1,8 +1,9 @@
 package cabify.basketcheckout.server;
 
-import cabify.basketcheckout.server.dao.StorageService;
+import cabify.basketcheckout.server.repository.StorageService;
 import cabify.basketcheckout.server.model.Basket;
 import cabify.basketcheckout.server.model.Product;
+import cabify.basketcheckout.server.web.BasketController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class BasketControllerTest {
     BasketController basketController;
 
     @Autowired
-    StorageService storageService;
+    StorageService<Basket> basketStorageService;
 
     @Test
     public void shouldAddAnewBasket() {
@@ -31,7 +32,7 @@ public class BasketControllerTest {
             throw new RuntimeException("Basket id " + basketId + " not valid", exception);
         }
 
-        Basket basket = storageService.readBasket(basketId);
+        Basket basket = basketStorageService.read(basketId);
         Assert.isTrue(basket.getId().equals(basketId), String.format("Basket id %s doesn't match with %s", basketId, basket.getId()));
 
         basketController.renmoveBasket(basketId);
@@ -56,7 +57,7 @@ public class BasketControllerTest {
         String basketId = basketController.newBasket();
         basketController.renmoveBasket(basketId);
 
-        Basket basket = storageService.readBasket(basketId);
+        Basket basket = basketStorageService.read(basketId);
         Assert.isNull(basket, "Basket should have been removed");
     }
 

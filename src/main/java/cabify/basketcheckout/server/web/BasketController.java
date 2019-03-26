@@ -1,9 +1,9 @@
-package cabify.basketcheckout.server;
+package cabify.basketcheckout.server.web;
 
-import cabify.basketcheckout.server.repository.StorageService;
 import cabify.basketcheckout.server.model.Basket;
 import cabify.basketcheckout.server.model.DiscountsAvailable;
 import cabify.basketcheckout.server.model.Product;
+import cabify.basketcheckout.server.repository.StorageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +17,7 @@ public class BasketController {
 
     private final Logger logger = LoggerFactory.getLogger(BasketController.class);
 
-    private final StorageService storageService;
+    private final StorageService<Basket> storageService;
     private final DiscountsAvailable discountsAvailable;
 
     public BasketController(StorageService storageService, DiscountsAvailable discountsAvailable) {
@@ -32,9 +32,12 @@ public class BasketController {
     public synchronized String newBasket() {
         String basketId = UUID.randomUUID().toString();
         Basket basket = new Basket(basketId);
-
-        if (!storageService.writeBasket(new Basket(basketId)))
+        try {
+            storageService.write(new Basket(basketId));
+        } catch (Exception e) {
+            logger.error("Error creating new basket", e);
             return null;
+        }
 
         logger.info(String.format("New basket %s created", basketId));
         return basketId;
@@ -51,15 +54,26 @@ public class BasketController {
             return false;
         }
 
-        Basket basket = storageService.readBasket(basketId);
+        Basket basket;
+        try {
+            basket = storageService.read(basketId);
+        } catch (Exception e) {
+            logger.error(String.format("Error reading the basket %s", basketId));
+            return false;
+        }
+
         if (basket == null) {
             logger.error(String.format("Basket %s not found", basketId));
             return false;
         }
         basket.addProduct(product);
 
-        if (!storageService.writeBasket(basket))
+        try {
+            storageService.write(basket);
+        } catch (Exception e) {
+            logger.error(String.format("Error writing the basket %s", basketId));
             return false;
+        }
 
         logger.info(String.format("Product %s added to basket %s", productCode, basketId));
         return true;
@@ -70,10 +84,17 @@ public class BasketController {
      */
     @RequestMapping("/total/{basketId}")
     public synchronized double retrieveTotal(@PathVariable String basketId) {
-        Basket basket = storageService.readBasket(basketId);
+        Basket basket;
+        try {
+            basket = storageService.read(basketId);
+        } catch (Exception e) {
+            logger.error(String.format("Error reading the basket %s", basketId));
+            return -1;
+        }
+
         if (basket == null) {
             logger.error(String.format("Basket %s not found", basketId));
-            return 0;
+            return -1;
         }
 
         double total = basket.getProducts()
@@ -96,8 +117,12 @@ public class BasketController {
      */
     @RequestMapping("/remove/{basketId}")
     public synchronized boolean renmoveBasket(@PathVariable String basketId) {
-        if (!storageService.removeBasket(basketId))
+        try {
+            storageService.remove(basketId);
+        } catch (Exception e) {
+            logger.error(String.format("Error removing the basket %s", basketId));
             return false;
+        }
 
         logger.info(String.format("Basket %s removed", basketId));
         return true;

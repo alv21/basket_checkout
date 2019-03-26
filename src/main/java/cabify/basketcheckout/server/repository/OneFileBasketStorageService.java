@@ -16,53 +16,46 @@ import java.util.List;
  */
 //@Service
 @Deprecated
-public class OneFileStorageService implements StorageService {
+public class OneFileBasketStorageService implements StorageService<Basket> {
 
-    private final Logger logger = LoggerFactory.getLogger(OneFileStorageService.class);
+    private final Logger logger = LoggerFactory.getLogger(OneFileBasketStorageService.class);
 
     private final File file = new File("baskets.json");
     private final ObjectMapper mapper = new ObjectMapper();
 
     @Override
-    public Basket readBasket(String basketId) {
+    public Basket read(String basketId) {
         try {
             List<Basket> baskets = mapper.readValue(file, new TypeReference<List<Basket>>() {
             });
             return retrieveBasket(baskets, basketId);
         } catch (IOException e) {
-            logger.error("Error reading the basket", e);
-            return null;
+            throw new RuntimeException("Error reading basket " + basketId, e);
         }
     }
 
     @Override
-    public boolean writeBasket(Basket basket) {
+    public void write(Basket basket) {
         List<Basket> baskets = readBaskets();
         baskets.remove(basket);
         baskets.add(basket);
         try {
             mapper.writeValue(file, baskets);
         } catch (IOException e) {
-            logger.error("Error writing the basket", e);
-            return false;
+            throw new RuntimeException("Error writing basket "+basket.getId(),e);
         }
-
-        return true;
     }
 
     @Override
-    public boolean removeBasket(String basketId) {
+    public void remove(String basketId) {
         List<Basket> baskets = readBaskets();
         Basket basket = retrieveBasket(baskets, basketId);
         baskets.remove(basket);
         try {
             mapper.writeValue(file, baskets);
         } catch (IOException e) {
-            logger.error("Error writing the basket", e);
-            return false;
+            throw new RuntimeException("Error removing the basket "+basketId, e);
         }
-
-        return true;
     }
 
     private Basket retrieveBasket(List<Basket> baskets, String basketId) {
@@ -80,8 +73,7 @@ public class OneFileStorageService implements StorageService {
                 baskets = mapper.readValue(file, new TypeReference<List<Basket>>() {
                 });
         } catch (IOException e) {
-            logger.error("Error reading the baskets", e);
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error reading the baskets", e);
         }
         return baskets;
     }
