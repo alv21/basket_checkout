@@ -1,4 +1,4 @@
-package cabify.basketcheckout.server.dao;
+package cabify.basketcheckout.server.repository;
 
 import cabify.basketcheckout.server.model.Basket;
 import com.fasterxml.jackson.core.type.TypeReference;

@@ -1,8 +1,6 @@
-package cabify.basketcheckout.server.dao;
+package cabify.basketcheckout.server.service;
 
 import cabify.basketcheckout.server.model.Basket;
-
-import java.io.IOException;
 
 public interface StorageService {
 

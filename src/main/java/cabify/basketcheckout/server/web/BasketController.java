@@ -1,6 +1,6 @@
 package cabify.basketcheckout.server;
 
-import cabify.basketcheckout.server.dao.StorageService;
+import cabify.basketcheckout.server.repository.StorageService;
 import cabify.basketcheckout.server.model.Basket;
 import cabify.basketcheckout.server.model.DiscountsAvailable;
 import cabify.basketcheckout.server.model.Product;
