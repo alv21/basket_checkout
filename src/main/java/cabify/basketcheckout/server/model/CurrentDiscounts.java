@@ -11,7 +11,7 @@ public class CurrentDiscounts implements DiscountsAvailable {
     @Override
     public List<Discount> getDiscounts() {
         return Arrays.asList(
-                new TshirtDiscount(3, 1),
+                new TshirtDiscount(3, 2),
                 new VoucherDiscount(2)
         );
     }

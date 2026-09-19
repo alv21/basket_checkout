@@ -33,7 +33,7 @@ public class BasketController {
         String basketId = UUID.randomUUID().toString();
         Basket basket = new Basket(basketId);
         try {
-            storageService.write(new Basket(basketId));
+            storageService.write(basket);
         } catch (Exception e) {
             logger.error("Error creating new basket", e);
             return null;

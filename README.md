@@ -9,7 +9,7 @@ Various departments have insisted on the following discounts:
 
 The marketing department thinks a buy 2 get 1 free promotion will work best (buy two of the same product, get one free), and would like this to only apply to VOUCHER items.
 
-The CFO insists that the best way to increase sales is with discounts on bulk purchases (buying x or more of a product, the price of that product is reduced), and requests that if you buy 3 or more TSHIRT items, the price per unit should be 19.00€.
+The CFO insists that the best way to increase sales is with discounts on bulk purchases (buying x or more of a product, the price of that product is reduced), and requests that if you buy 3 or more TSHIRT items, the price per unit should be 18.00€.
 
 This set of rules to apply may change quite frequently in the future.
 
@@ -40,10 +40,10 @@ Items: VOUCHER, TSHIRT, VOUCHER
 Total: 25.00€
 
 Items: TSHIRT, TSHIRT, TSHIRT, VOUCHER, TSHIRT
-Total: 81.00€
+Total: 77.00€
 
 Items: VOUCHER, TSHIRT, VOUCHER, VOUCHER, MUG, TSHIRT, TSHIRT
-Total: 74.50€
+Total: 71.50€
 The code should:
 
 Build and execute in a Unix operating system.

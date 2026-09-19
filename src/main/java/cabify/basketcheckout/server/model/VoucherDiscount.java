@@ -12,14 +12,10 @@ public class VoucherDiscount implements Discount {
 
     @Override
     public double getDiscount(List<Product> products) {
-        double discount = 0;
-
         long nVoucher = products.stream()
                 .filter(p -> p == Product.VOUCHER)
                 .count();
 
-        discount = Math.floor(nVoucher / itemsToGetOneFree) * Product.VOUCHER.getPrice();
-
-        return discount;
+        return Math.floor(nVoucher / itemsToGetOneFree) * Product.VOUCHER.getPrice();
     }
 }

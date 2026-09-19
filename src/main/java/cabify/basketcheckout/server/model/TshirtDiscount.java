@@ -14,15 +14,14 @@ public class TshirtDiscount implements Discount {
 
     @Override
     public double getDiscount(List<Product> products) {
-        double discount = 0;
-
         long nTshirt = products.stream()
                 .filter(p -> p == Product.TSHIRT)
                 .count();
 
-        if (nTshirt >= bulkQuantity)
-            discount = priceReduction * nTshirt;
+        if (nTshirt >= bulkQuantity) {
+            return priceReduction * nTshirt;
+        }
 
-        return discount;
+        return 0;
     }
 }

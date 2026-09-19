@@ -53,6 +53,20 @@ public class BasketControllerTest {
     }
 
     @Test
+    public void shouldApplyTheIncreasedBulkTshirtDiscount() {
+        String basketId = basketController.newBasket();
+
+        basketController.addProduct("TSHIRT", basketId);
+        basketController.addProduct("TSHIRT", basketId);
+        basketController.addProduct("TSHIRT", basketId);
+
+        double total = basketController.retrieveTotal(basketId);
+        Assert.isTrue(total == 54.0, "total " + total + " is not correct");
+
+        basketController.renmoveBasket(basketId);
+    }
+
+    @Test
     public void shouldRemoveBasket() {
         String basketId = basketController.newBasket();
         basketController.renmoveBasket(basketId);
