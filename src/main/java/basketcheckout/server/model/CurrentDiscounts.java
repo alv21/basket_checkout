@@ -1,4 +1,4 @@
-package cabify.basketcheckout.server.model;
+package basketcheckout.server.model;
 
 import org.springframework.stereotype.Component;
 
@@ -11,7 +11,7 @@ public class CurrentDiscounts implements DiscountsAvailable {
     @Override
     public List<Discount> getDiscounts() {
         return Arrays.asList(
-                new TshirtDiscount(3, 2),
+                new TshirtDiscount(3, 1),
                 new VoucherDiscount(2)
         );
     }

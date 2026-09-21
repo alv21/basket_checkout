@@ -1,15 +1,15 @@
-Besides providing exceptional transportation services, Cabify also runs a physical store which sells 3 products:
+Besides providing exceptional transportation services, the company also runs a physical store which sells 3 products:
 
 Code         | Name                |  Price
 -------------------------------------------------
-VOUCHER      | Cabify Voucher      |   5.00€
-TSHIRT       | Cabify T-Shirt      |  20.00€
-MUG          | Cafify Coffee Mug   |   7.50€
+VOUCHER      | MyCompany Voucher      |   5.00€
+TSHIRT       | MyCompany T-Shirt      |  20.00€
+MUG          | MyCompany Coffee Mug   |   7.50€
 Various departments have insisted on the following discounts:
 
 The marketing department thinks a buy 2 get 1 free promotion will work best (buy two of the same product, get one free), and would like this to only apply to VOUCHER items.
 
-The CFO insists that the best way to increase sales is with discounts on bulk purchases (buying x or more of a product, the price of that product is reduced), and requests that if you buy 3 or more TSHIRT items, the price per unit should be 18.00€.
+The CFO insists that the best way to increase sales is with discounts on bulk purchases (buying x or more of a product, the price of that product is reduced), and requests that if you buy 3 or more TSHIRT items, the price per unit should be 19.00€.
 
 This set of rules to apply may change quite frequently in the future.
 
@@ -27,7 +27,7 @@ The server must support concurrent invocations of those operations: any of them 
 
 The client must connect user input with those operations via the protocol exposed by the server.
 
-We don't have any DBAs at Cabify, so the service shouldn't use any external databases of any kind.
+We don't have any DBAs at MyCompany, so the service shouldn't use any external databases of any kind.
 
 Implement a checkout service and its client that fulfils these requirements.
 
@@ -40,10 +40,10 @@ Items: VOUCHER, TSHIRT, VOUCHER
 Total: 25.00€
 
 Items: TSHIRT, TSHIRT, TSHIRT, VOUCHER, TSHIRT
-Total: 77.00€
+Total: 81.00€
 
 Items: VOUCHER, TSHIRT, VOUCHER, VOUCHER, MUG, TSHIRT, TSHIRT
-Total: 71.50€
+Total: 74.50€
 The code should:
 
 Build and execute in a Unix operating system.

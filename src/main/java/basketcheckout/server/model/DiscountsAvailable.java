@@ -1,6 +1,4 @@
-package cabify.basketcheckout.server.model;
-
-import cabify.basketcheckout.server.model.Discount;
+package basketcheckout.server.model;
 
 import java.util.List;
 

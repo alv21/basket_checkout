@@ -1,9 +1,9 @@
-package cabify.basketcheckout.server;
+package basketcheckout.server;
 
-import cabify.basketcheckout.server.repository.StorageService;
-import cabify.basketcheckout.server.model.Basket;
-import cabify.basketcheckout.server.model.Product;
-import cabify.basketcheckout.server.web.BasketController;
+import basketcheckout.server.repository.StorageService;
+import basketcheckout.server.model.Basket;
+import basketcheckout.server.model.Product;
+import basketcheckout.server.web.BasketController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,41 +35,33 @@ public class BasketControllerTest {
         Basket basket = basketStorageService.read(basketId);
         Assert.isTrue(basket.getId().equals(basketId), String.format("Basket id %s doesn't match with %s", basketId, basket.getId()));
 
-        basketController.renmoveBasket(basketId);
+        basketController.removeBasket(basketId);
     }
 
     @Test
     public void shouldRetrieveTheRightTotal() throws InterruptedException {
         String basketId = basketController.newBasket();
 
-        basketController.addProduct("TSHIRT", basketId);
-        basketController.addProduct("MUG", basketId);
-        basketController.addProduct("TSHIRT", basketId);
+        basketController.addProduct(Product.TSHIRT.toString(), basketId);
+        basketController.addProduct(Product.MUG.toString(), basketId);
+        basketController.addProduct(Product.TSHIRT.toString(), basketId);
+        basketController.addProduct(Product.TSHIRT.toString(), basketId);
+        basketController.addProduct(Product.VOUCHER.toString(), basketId);
+        basketController.addProduct(Product.TSHIRT.toString(), basketId);
+        basketController.addProduct(Product.VOUCHER.toString(), basketId);
 
         double total = basketController.retrieveTotal(basketId);
-        Assert.isTrue(total == Product.MUG.getPrice() + 2 * Product.TSHIRT.getPrice(), "total " + total + " is not correct");
+        Assert.isTrue(total == Product.MUG.getPrice()
+                + 4 * Product.TSHIRT.getPrice() -4
+                + 1 * Product.VOUCHER.getPrice(), "total " + total + " is not correct");
 
-        basketController.renmoveBasket(basketId);
-    }
-
-    @Test
-    public void shouldApplyTheIncreasedBulkTshirtDiscount() {
-        String basketId = basketController.newBasket();
-
-        basketController.addProduct("TSHIRT", basketId);
-        basketController.addProduct("TSHIRT", basketId);
-        basketController.addProduct("TSHIRT", basketId);
-
-        double total = basketController.retrieveTotal(basketId);
-        Assert.isTrue(total == 54.0, "total " + total + " is not correct");
-
-        basketController.renmoveBasket(basketId);
+        basketController.removeBasket(basketId);
     }
 
     @Test
     public void shouldRemoveBasket() {
         String basketId = basketController.newBasket();
-        basketController.renmoveBasket(basketId);
+        basketController.removeBasket(basketId);
 
         Basket basket = basketStorageService.read(basketId);
         Assert.isNull(basket, "Basket should have been removed");

@@ -1,9 +1,9 @@
-package cabify.basketcheckout.server.web;
+package basketcheckout.server.web;
 
-import cabify.basketcheckout.server.model.Basket;
-import cabify.basketcheckout.server.model.DiscountsAvailable;
-import cabify.basketcheckout.server.model.Product;
-import cabify.basketcheckout.server.repository.StorageService;
+import basketcheckout.server.model.Basket;
+import basketcheckout.server.model.DiscountsAvailable;
+import basketcheckout.server.model.Product;
+import basketcheckout.server.repository.StorageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,7 +33,7 @@ public class BasketController {
         String basketId = UUID.randomUUID().toString();
         Basket basket = new Basket(basketId);
         try {
-            storageService.write(basket);
+            storageService.write(new Basket(basketId));
         } catch (Exception e) {
             logger.error("Error creating new basket", e);
             return null;
@@ -116,7 +116,7 @@ public class BasketController {
      * Removes the basket and returns true for success
      */
     @RequestMapping("/remove/{basketId}")
-    public synchronized boolean renmoveBasket(@PathVariable String basketId) {
+    public synchronized boolean removeBasket(@PathVariable String basketId) {
         try {
             storageService.remove(basketId);
         } catch (Exception e) {

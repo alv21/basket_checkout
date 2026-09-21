@@ -1,4 +1,4 @@
-package cabify.basketcheckout.server.model;
+package basketcheckout.server.model;
 
 import java.util.List;
 
@@ -14,14 +14,15 @@ public class TshirtDiscount implements Discount {
 
     @Override
     public double getDiscount(List<Product> products) {
+        double discount = 0;
+
         long nTshirt = products.stream()
                 .filter(p -> p == Product.TSHIRT)
                 .count();
 
-        if (nTshirt >= bulkQuantity) {
-            return priceReduction * nTshirt;
-        }
+        if (nTshirt >= bulkQuantity)
+            discount = priceReduction * nTshirt;
 
-        return 0;
+        return discount;
     }
 }

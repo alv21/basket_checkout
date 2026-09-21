@@ -1,4 +1,4 @@
-package cabify.basketcheckout.server.model;
+package basketcheckout.server.model;
 
 import java.util.List;
 
@@ -12,10 +12,14 @@ public class VoucherDiscount implements Discount {
 
     @Override
     public double getDiscount(List<Product> products) {
+        double discount = 0;
+
         long nVoucher = products.stream()
                 .filter(p -> p == Product.VOUCHER)
                 .count();
 
-        return Math.floor(nVoucher / itemsToGetOneFree) * Product.VOUCHER.getPrice();
+        discount = Math.floor(nVoucher / itemsToGetOneFree) * Product.VOUCHER.getPrice();
+
+        return discount;
     }
 }

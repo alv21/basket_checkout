@@ -1,4 +1,4 @@
-package cabify.basketcheckout.server.repository;
+package basketcheckout.server.repository;
 
 public interface StorageService<T> {
 

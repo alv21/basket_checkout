@@ -1,10 +1,10 @@
-package cabify.basketcheckout.server.model;
+package basketcheckout.server.model;
 
 public enum Product {
 
-    VOUCHER("Cabify Voucher", 5f),
-    TSHIRT("Cabify T-Shirt", 20f),
-    MUG("Cabify Coffee Mug", 7.5f);
+    VOUCHER("MyCompany Voucher", 5f),
+    TSHIRT("MyCompany T-Shirt", 20f),
+    MUG("MyCompany Coffee Mug", 7.5f);
 
     private String description;
     private Float price;

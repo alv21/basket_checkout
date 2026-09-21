@@ -1,4 +1,4 @@
-package cabify.basketcheckout.server.model;
+package basketcheckout.server.model;
 
 import java.io.Serializable;
 import java.util.Collections;

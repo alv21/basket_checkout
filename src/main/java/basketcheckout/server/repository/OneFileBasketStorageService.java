@@ -1,6 +1,6 @@
-package cabify.basketcheckout.server.repository;
+package basketcheckout.server.repository;
 
-import cabify.basketcheckout.server.model.Basket;
+import basketcheckout.server.model.Basket;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -12,7 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Stores all the baskets in one file (dusabled)
+ * Stores all the baskets in one file (disabled)
  */
 //@Service
 @Deprecated
